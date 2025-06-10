@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/colors_manager.dart';
 import 'package:news_app/core/extentions/context_extention.dart';
+import 'package:provider/provider.dart';
+
+import '../../../provider/home_provider.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var homeProvider = Provider.of<HomeProvider>(context);
     return Drawer(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -33,18 +37,24 @@ class HomeDrawer extends StatelessWidget {
            padding: REdgeInsets.all(16.0),
            child: Column(
              children: [
-               Row(
-                 children: [
-                   Icon(
-                     Icons.home,
-                     color: ColorsManager.white,
-                   ),
-                   SizedBox(width: 8.w,),
-                   Text("Go To Home",style: TextStyle(
-                     fontSize: 20.sp,
-                     color: ColorsManager.white,
-                     fontWeight: FontWeight.bold,))
-                 ],
+               InkWell(
+                 onTap: (){
+                   homeProvider.goToCategoriesView();
+                   Navigator.pop(context);
+                 },
+                 child: Row(
+                   children: [
+                     Icon(
+                       Icons.home,
+                       color: ColorsManager.white,
+                     ),
+                     SizedBox(width: 8.w,),
+                     Text("Go To Home",style: TextStyle(
+                       fontSize: 20.sp,
+                       color: ColorsManager.white,
+                       fontWeight: FontWeight.bold,))
+                   ],
+                 ),
                ),
                SizedBox(height: 24.h,),
                Divider(color: ColorsManager.white,

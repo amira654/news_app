@@ -5,10 +5,12 @@ import 'package:news_app/presentation/home/sources_view/article.dart';
 
 import '../../../core/assets_manager.dart';
 import '../../../models/article_model.dart';
+import '../../../models/category_model.dart';
 import '../../../models/source_model.dart';
 
 class SourcesView extends StatelessWidget {
-  SourcesView({super.key});
+  SourcesView({super.key,required this.category});
+  final CategoryModel category;
   List<SourceModel> sources = [
     SourceModel(
       id: "1",
