@@ -52,7 +52,7 @@ class modalBottomSheetBody extends StatelessWidget {
                     launchUrl(Uri.parse(article.url ?? ''),
                         mode: LaunchMode.inAppWebView);
                   },
-                  child: Text("View Full Article"))
+                  child: const Text("View Full Article"))
             ],
           ),
         ),
