@@ -5,37 +5,49 @@ class CategoryModel {
   final String title;
   final String imagePath;
 
-  const CategoryModel(
-      {required this.id, required this.title, required this.imagePath});
-
-  static List<CategoryModel> _getCategories() {
-    return const [
-      CategoryModel(
-          id: "business",
-          title: "Business",
-          imagePath: AssetsManager.businessLight),
-      CategoryModel(
-          id: "general",
-          title: "General",
-          imagePath: AssetsManager.generalLight),
-      CategoryModel(
-          id: "sports", title: "Sports", imagePath: AssetsManager.sportsLight),
-      CategoryModel(
-          id: "technology",
-          title: "Technology",
-          imagePath: AssetsManager.technologyLight),
-      CategoryModel(
-          id: "entertainment",
-          title: "Entertainment",
-          imagePath: AssetsManager.entertainmentLight),
-      CategoryModel(
-          id: "health", title: "Health", imagePath: AssetsManager.healthLight),
-      CategoryModel(
-          id: "science",
-          title: "Science",
-          imagePath: AssetsManager.scienceLight),
-    ];
-  }
+  const CategoryModel({
+    required this.id,
+    required this.title,
+    required this.imagePath,
+  });
 
   static List<CategoryModel> categories = _getCategories();
+
+  static List<CategoryModel> _getCategories() => [
+        CategoryModel(
+          id: "sports",
+          title: "Sports",
+          imagePath: AssetsManager.sports,
+        ),
+        CategoryModel(
+          id: "entertainment",
+          title: "Entertainment",
+          imagePath: AssetsManager.entertainment,
+        ),
+        CategoryModel(
+          id: "business",
+          title: "Business",
+          imagePath: AssetsManager.business,
+        ),
+        CategoryModel(
+          id: "science",
+          title: "Science",
+          imagePath: AssetsManager.science,
+        ),
+        CategoryModel(
+          id: "technology",
+          title: "Technology",
+          imagePath: AssetsManager.tech,
+        ),
+        CategoryModel(
+          id: "health",
+          title: "Health",
+          imagePath: AssetsManager.health,
+        ),
+        CategoryModel(
+          id: "general",
+          title: "General",
+          imagePath: AssetsManager.general,
+        ),
+      ];
 }

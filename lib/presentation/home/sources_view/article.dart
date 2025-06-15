@@ -4,18 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/core/colors_manager.dart';
 import 'package:news_app/models/articles_response/Article.dart';
 
+import 'modal_bottom_sheet_body.dart';
+
 class ArticleItem extends StatelessWidget {
-  const ArticleItem({super.key,required this.article});
+  const ArticleItem({super.key, required this.article});
 
   final Article article;
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (context) => Container(),
-        );
+        _showArticleBottomSheet(context, article);
       },
       child: Container(
         padding: REdgeInsets.all(8),
@@ -25,42 +24,31 @@ class ArticleItem extends StatelessWidget {
         ),
         child: Column(
           children: [
-            CachedNetworkImage(
-              imageUrl: article.urlToImage ?? '',
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  CircularProgressIndicator(
-                value: downloadProgress.progress,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16.r),
+              child: CachedNetworkImage(
+                imageUrl: article.urlToImage ?? '',
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
-              errorWidget: (context, url, error) => Icon(Icons.error),
             ),
             SizedBox(height: 10.h),
             Text(
               article.title ?? '',
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: ColorsManager.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+                style: Theme.of(context).textTheme.displayMedium),
             SizedBox(height: 10.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   article.author ?? '',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: ColorsManager.grey,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                    style: Theme.of(context).textTheme.displaySmall),
                 Text(
                   article.publishedAt ?? '',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: ColorsManager.grey,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
               ],
             ),
@@ -68,5 +56,20 @@ class ArticleItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showArticleBottomSheet(BuildContext context, Article article) {
+    showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) {
+          return modalBottomSheetBody(
+            article: article,
+          );
+        });
   }
 }
