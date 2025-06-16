@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app/provider/search_view_provider.dart';
+import 'package:provider/provider.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({super.key});
@@ -7,8 +9,11 @@ class CustomSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: context.read<SearchViewProvider>().searchController,
       keyboardType: TextInputType.text,
-      onSubmitted: (value) {},
+      onSubmitted: (value) {
+        context.read<SearchViewProvider>().searchArticles();
+      },
       style: Theme.of(context).textTheme.labelMedium,
       decoration: InputDecoration(
           border: OutlineInputBorder(
