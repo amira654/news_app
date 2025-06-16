@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
-import '../news_app.dart';
 import '../presentation/home/home.dart';
+import '../presentation/search/search.dart';
 
 class RoutesManager {
   static const String home = '/home';
@@ -13,8 +12,8 @@ class RoutesManager {
       case home:
         return CupertinoPageRoute(
             builder: (_) => const Home());
-
-
+      case search:
+        return CupertinoPageRoute(builder: (_) => const Search());
     }
     return null;
   }

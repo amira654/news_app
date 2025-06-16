@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:news_app/models/sources_response/Source.dart';
 import 'package:news_app/presentation/home/sources_view/article.dart';
 import 'package:news_app/provider/sources_view_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../models/articles_response/Article.dart';
+import '../../../core/widgets/error_state_widget.dart';
 import '../../../models/category_model.dart';
 import '../../../provider/article_view_provider.dart';
 
@@ -32,7 +31,8 @@ class _SourcesViewState extends State<SourcesView> {
     sourcesViewProvider = SourcesViewProvider();
     articlesViewProvider = ArticlesViewProvider();
     await sourcesViewProvider.loadSources(widget.category); // blocking
-    articlesViewProvider.loadArticles(sourcesViewProvider.sources[0]);
+    articlesViewProvider.loadArticles(
+        (sourcesViewProvider.state as SourcesSuccessState).sources[0]);
   }
 
   @override
@@ -48,35 +48,66 @@ class _SourcesViewState extends State<SourcesView> {
           children: [
             Consumer<SourcesViewProvider>(
               builder: (context, sourcesViewProvider, child) {
-                List<Source> sources = sourcesViewProvider.sources;
-                return DefaultTabController(
-                  length: sources.length,
-                  child: TabBar(
-                    onTap: (index) {
-                      articlesViewProvider.loadArticles(
-                        sourcesViewProvider.sources[index],
-                      );
-                    },
-                    isScrollable: true,
-                    tabs: sources
-                        .map((source) => Tab(text: source.name))
-                        .toList(),
-                  ),
-                );
+                var state = sourcesViewProvider.state;
+                switch (state) {
+                  case SourcesSuccessState():
+                    return DefaultTabController(
+                      length: state.sources.length,
+                      child: TabBar(
+                        onTap: (index) {
+                          articlesViewProvider.loadArticles(
+                            state.sources[index],
+                          );
+                        },
+                        isScrollable: true,
+                        tabs: state.sources
+                            .map((source) => Tab(text: source.name))
+                            .toList(),
+                      ),
+                    );
+                  case SourcesLoadingState():
+                    return const Center(child: CircularProgressIndicator());
+                  case SourcesErrorState():
+                    return ErrorStateWidget(
+                      serverError: state.serverError,
+                      exception: state.exception,
+                    );
+                }
               },
             ),
             SizedBox(height: 16.h),
             Consumer<ArticlesViewProvider>(
               builder: (context, articlesViewProvider, child) {
-                List<Article> articles = articlesViewProvider.articles;
-                return Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) => SizedBox(height: 8.h),
-                    itemBuilder: (context, index) =>
-                        ArticleItem(article: articles[index]),
-                    itemCount: articles.length,
-                  ),
-                );
+                var state = articlesViewProvider.state;
+                switch (state) {
+                  case ArticlesSuccessState():
+                    return Expanded(
+                      child: ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 8.h),
+                        itemBuilder: (context, index) =>
+                            ArticleItem(article: state.articles[index]),
+                        itemCount: state.articles.length,
+                      ),
+                    );
+                  case ArticlesLoadingState():
+                    return const Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        ],
+                      ),
+                    );
+                  case ArticlesErrorState():
+                    return ErrorStateWidget(
+                      serverError: state.serverError,
+                      exception: state.exception,
+                    );
+                }
               },
             ),
           ],

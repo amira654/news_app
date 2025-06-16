@@ -16,6 +16,7 @@ class HomeProvider extends ChangeNotifier{
  void goToCategoriesView(){
     if(view == CategoriesView()) return;
     view = CategoriesView();
+    homeTitle = "Home";
     notifyListeners();
   }
 

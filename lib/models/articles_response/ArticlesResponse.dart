@@ -9,11 +9,15 @@ class ArticlesResponse {
     this.status,
     this.totalResults,
     this.articles,
+    this.code,
+    this.message,
   });
 
   ArticlesResponse.fromJson(dynamic json) {
     status = json['status'];
     totalResults = json['totalResults'];
+    code = json['code'];
+    message = json['message'];
     if (json['articles'] != null) {
       articles = [];
       json['articles'].forEach((v) {
@@ -23,12 +27,15 @@ class ArticlesResponse {
   }
 
   String? status;
+  String? code;
+  String? message;
   int? totalResults;
   List<Article>? articles;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = status;
+
     map['totalResults'] = totalResults;
     if (articles != null) {
       map['articles'] = articles?.map((v) => v.toJson()).toList();
