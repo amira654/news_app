@@ -62,9 +62,12 @@ class ThemeManager {
         color: ColorsManager.grey,
         fontWeight: FontWeight.w500,
       ),
+      labelMedium: TextStyle(
+        fontSize: 18.sp,
+        color: ColorsManager.white,
+        fontWeight: FontWeight.w700,
+      ),
     ),
   );
-
-
 
 }
