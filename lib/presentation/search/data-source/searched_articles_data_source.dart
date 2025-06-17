@@ -11,10 +11,14 @@ class SearchArticlesDataSource {
   static const String _articlesEndPoint = "/v2/everything";
 
   Future<List<Article>> getSearchedArticles(
-      {required String searchQuery}) async {
+      {required String searchQuery,
+      required int page,
+      int pageSize = 5}) async {
     Uri url = Uri.https(_baseUrl, _articlesEndPoint, {
       "apiKey": _apiKey,
       "q": searchQuery,
+      "page": '$page',
+      "pageSize": '$pageSize',
     });
     http.Response response = await http.get(url);
     var json = jsonDecode(response.body);

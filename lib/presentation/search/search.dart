@@ -13,6 +13,7 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
+        controller: context.read<SearchViewProvider>().scrollController,
         slivers: [
           SliverAppBar(
             floating: true,
@@ -34,19 +35,27 @@ class Search extends StatelessWidget {
                     [Center(child: Text(viewModel.errorMessage!))]),
               );
             }
-            if (viewModel.searchedArticles.isEmpty) {
+            if (viewModel.newArticles.isEmpty) {
               return SliverFillViewport(
                 delegate: SliverChildListDelegate(
-                    [Center(child: Text("No articles found"))]),
+                    [const Center(child: Text("No articles found"))]),
               );
             }
             return SliverList.separated(
               separatorBuilder: (context, index) => SizedBox(
                 height: 16.h,
               ),
-              itemCount: viewModel.searchedArticles.length,
+              itemCount: viewModel.newArticles.length +
+                  (viewModel.paginationLoading ? 1 : 0),
               itemBuilder: (context, index) {
-                final article = viewModel.searchedArticles[index];
+                if (viewModel.paginationLoading &&
+                    index == viewModel.newArticles.length) {
+                  return Padding(
+                    padding: REdgeInsets.all(16.0),
+                    child: const Center(child: CircularProgressIndicator()),
+                  );
+                }
+                final article = viewModel.newArticles[index];
                 return ArticleItem(
                   article: article,
                 );
