@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/colors_manager.dart';
 import '../../../models/articles_response/Article.dart';
 
 class modalBottomSheetBody extends StatelessWidget {
@@ -42,9 +41,7 @@ class modalBottomSheetBody extends StatelessWidget {
               SizedBox(height: 10.h),
               Text(
                 article.description ?? '',
-                style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: ColorsManager.black17,
-                    ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               SizedBox(height: 10.h),
               ElevatedButton(

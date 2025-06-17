@@ -1,0 +1,14 @@
+{
+   "@@locale": "en",
+    "app_title": "News App",
+    "home": "Home",
+    "dark_mode": "Dark Mode",
+    "language": "English",
+    "light": "light",
+    "dark": "dark",
+    "go_to_home": "Go To Home",
+    "good_morning": "Good Morning\nHere is Some News For You",
+    "search": "Search",
+    "no_search_result": "No Result Found"
+
+}

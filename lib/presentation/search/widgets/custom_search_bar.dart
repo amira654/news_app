@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/provider/search_view_provider.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class CustomSearchBar extends StatelessWidget {
             borderRadius: BorderRadius.circular(16.r),
             borderSide: BorderSide(color: Theme.of(context).primaryColorDark),
           ),
-          hintText: "Search",
+          hintText: AppLocalizations.of(context)!.search,
           hintStyle: Theme.of(context).textTheme.labelMedium,
           prefixIcon:
               Icon(Icons.search, color: Theme.of(context).primaryColorDark),

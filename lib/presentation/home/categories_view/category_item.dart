@@ -11,6 +11,8 @@ final CategoryModel category;
   @override
   Widget build(BuildContext context) {
     var homeProvider = Provider.of<HomeProvider>(context);
+    final isDark = homeProvider.isDark;
+
     return InkWell(
       onTap: () {
         homeProvider.goToSourcesView(category);
@@ -20,7 +22,7 @@ final CategoryModel category;
           ClipRRect(
             borderRadius: BorderRadius.circular(16.r),
             child: Image.asset(
-              category.imagePath,
+              isDark ? category.imagePath : category.imagePathLight,
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app/presentation/search/widgets/custom_search_bar.dart';
 import 'package:news_app/provider/search_view_provider.dart';
@@ -37,8 +38,11 @@ class Search extends StatelessWidget {
             }
             if (viewModel.newArticles.isEmpty) {
               return SliverFillViewport(
-                delegate: SliverChildListDelegate(
-                    [const Center(child: Text("No articles found"))]),
+                delegate: SliverChildListDelegate([
+                  Center(
+                      child:
+                          Text(AppLocalizations.of(context)!.no_search_result))
+                ]),
               );
             }
             return SliverList.separated(
@@ -56,8 +60,11 @@ class Search extends StatelessWidget {
                   );
                 }
                 final article = viewModel.newArticles[index];
-                return ArticleItem(
-                  article: article,
+                return Padding(
+                  padding: REdgeInsets.symmetric(horizontal: 8.0),
+                  child: ArticleItem(
+                    article: article,
+                  ),
                 );
               },
             );
