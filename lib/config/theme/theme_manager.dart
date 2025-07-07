@@ -19,7 +19,7 @@ class ThemeManager {
         ),
       ),
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       tabAlignment: TabAlignment.start,
       indicatorColor: ColorsManager.white,
       dividerColor: Colors.transparent,
@@ -88,7 +88,7 @@ class ThemeManager {
         ),
       ),
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       tabAlignment: TabAlignment.start,
       indicatorColor: ColorsManager.white,
       dividerColor: Colors.transparent,
